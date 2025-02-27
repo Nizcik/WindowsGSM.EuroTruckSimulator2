@@ -182,7 +182,7 @@ namespace WindowsGSM.Plugins
 
             // Specify the new values
             string ServerName = _serverData.ServerName;
-            string Port = _serverData.ServerQueryPort;
+            string Port = _serverData.ServerPort;
             string QueryPort = _serverData.ServerQueryPort;
             string GLST = _serverData.ServerGSLT;
 
@@ -197,7 +197,7 @@ namespace WindowsGSM.Plugins
                     // Modify lobby_name
                     if (lines[i].Contains("lobby_name"))
                     {
-                        lines[i] = Regex.Replace(lines[i], @"""(.*)""", $"\"{ServerName}\"");
+                        lines[i] = Regex.Replace(lines[i], @"lobby_name: "".*""", $"lobby_name: \"{ServerName}\"");
                     }
  
                     // Modify connection_dedicated_port
@@ -215,7 +215,7 @@ namespace WindowsGSM.Plugins
                     // Modify GSLT
                     if (lines[i].Contains("server_logon_token"))
                     {
-                        lines[i] = Regex.Replace(lines[i], @"\d+", GLST);
+                        lines[i] = Regex.Replace(lines[i], @"server_logon_token: "".*""|server_logon_token: .*|server_logon_token: """"", $"server_logon_token: {GLST}");
                     }
                 }
 
